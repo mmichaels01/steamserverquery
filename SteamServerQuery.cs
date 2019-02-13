@@ -48,8 +48,8 @@ namespace SteamServerQuery
                     {
                         ms.Seek(4, SeekOrigin.Begin);   // skip the 4 0xFFs
                         var header = br.ReadByte();
-                        var chalengeNumber = br.ReadBytes(4);
-                        return new byte[9] { 0xFF, 0xFF, 0xFF, 0xFF, 0x55, chalengeNumber[0], chalengeNumber[1], chalengeNumber[2], chalengeNumber[3] };
+                        var challengeNumber = br.ReadBytes(4);
+                        return new byte[9] { 0xFF, 0xFF, 0xFF, 0xFF, 0x55, challengeNumber[0], challengeNumber[1], challengeNumber[2], challengeNumber[3] };
                     }
                 }
             }
