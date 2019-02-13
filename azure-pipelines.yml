@@ -32,11 +32,12 @@ steps:
   displayName: publish artifacts
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/packages'
 
 - task: NuGetCommand@2
   inputs:
     command: push
     nuGetFeedType: external
     publishFeedCredentials: 'NuGet'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/packages/*.nupkg'
 
