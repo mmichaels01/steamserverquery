@@ -1,7 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
-
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup>
+        <VersionPrefix>0.1.0</VersionPrefix>
+        <VersionPrefix Condition=" '$(BUILD_BUILDID)' != '' ">
+            $(VersionPrefix).$(BUILD_BUILDID)
+        </VersionPrefix>
+    </PropertyGroup>
+    <Choose>
+        <When Condition=" '$(Prerelease)' != '' ">
+            <PropertyGroup>
+                <!-- Prerelease version numbers are MAJOR.MINOR.0-pre-build###### -->
+                <VersionSuffix>$(Prerelease)-build$(BUILD_BUILDID.PadLeft(6, '0'))</VersionSuffix>
+            </PropertyGroup>
+        </When>
+        <Otherwise>
+            <PropertyGroup>
+                <!-- Release version numbers are MAJOR.MINOR.# -->
+                <VersionPrefix>$(VersionPrefix).$(BUILD_BUILDID.PadLeft(1, '0'))</VersionPrefix>
+            </PropertyGroup>
+        </Otherwise>
+    </Choose>
 </Project>
