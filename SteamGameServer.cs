@@ -56,8 +56,8 @@ namespace SteamServerQuery
                 udp.Client.ReceiveTimeout = timeout;
 
                 await udp.SendAsync(INFO_REQUEST, INFO_REQUEST.Length, ep);
-                var result = await udp.ReceiveAsync();
-                using (var ms = new MemoryStream(result.Buffer))
+                var result = udp.Receive(ref ep);
+                using (var ms = new MemoryStream(result))
                 {
                     using (var br = new BinaryReader(ms, Encoding.UTF8))
                     {
@@ -113,8 +113,8 @@ namespace SteamServerQuery
         private static async Task<byte[]> GetPlayerChallengeResponseAsync(IPEndPoint ep, UdpClient udp)
         {
             await udp.SendAsync(PLAYER_CHALLENGE_REQUEST, PLAYER_CHALLENGE_REQUEST.Length, ep);
-            var result = await udp.ReceiveAsync();
-            using (var ms = new MemoryStream(result.Buffer))
+            var result = udp.Receive(ref ep);
+            using (var ms = new MemoryStream(result))
             {
                 using (var br = new BinaryReader(ms, Encoding.UTF8))
                 {
@@ -128,8 +128,8 @@ namespace SteamServerQuery
         private static async Task<Player[]> GetPlayersAsync(IPEndPoint ep, UdpClient udp, byte[] playerReq)
         {
             await udp.SendAsync(playerReq, playerReq.Length, ep);
-            var result = await udp.ReceiveAsync();
-            using (var ms = new MemoryStream(result.Buffer))
+            var result = udp.Receive(ref ep);
+            using (var ms = new MemoryStream(result))
             {
                 using (var br = new BinaryReader(ms, Encoding.UTF8))
                 {
