@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SteamServerQuery
+﻿namespace SteamServerQuery
 {
     public class Player
     {
